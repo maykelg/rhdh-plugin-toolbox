@@ -1,6 +1,9 @@
-# RHDH Plugin Toolbox
+# RHDH Plugin Toolbox & Dynamic Plugin Builder
 
-The **RHDH Plugin Toolbox** is a utility project designed to assist with building, and testing, plugins for Red Hat Developer Hub (RHDH)). This repository contains scripts and Dockerfiles to streamline the development and deployment process.
+The **RHDH Plugin Toolbox** is a utility project designed to assist with building and testing plugins for Red Hat Developer Hub (RHDH). This repository contains scripts and Dockerfiles to streamline the development and packaging of dynamic plugins intended for use with RHDH. 
+
+
+As it stands, by following the instructions below you can build a dynamic plugin in a few munites with very few upfront requirements or pre-requisites. You don't even need to be all that familiar with NodeJS, or Yarn, or RHDH. If nothing else, you can browse through this repo to familiarise yourself with the tools and commands required to package regular Backstage plugins as dynamic plugins for use with RHDH
 
 ## Features
 
@@ -10,7 +13,7 @@ The **RHDH Plugin Toolbox** is a utility project designed to assist with buildin
 ## Prerequisites
 
 - Podman installed on your system.
-- Quay.io Account (Free)
+- A Quay.io Account (Free)
 
 ## Getting Started
 
