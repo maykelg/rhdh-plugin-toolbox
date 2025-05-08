@@ -59,15 +59,15 @@ The **RHDH Plugin Toolbox** is a utility project designed to assist with buildin
         disabled: false
     ```
 
-    Test that the plugin is working correctly (requires catalog entities that have "// TODO:" entries in the code on GitHub). If the correct conditions are met and the plugin is working, you should see a "Todo" TAB in catalog entities where the [associated codebase](https://github.com/benwilcock/springboot-djl-demo/blob/main/catalog-info.yml) has "TODO:" entries in its code.
+    Test that the plugin is working correctly (requires catalog entities that have "// TODO:" entries in the code on GitHub). If the correct conditions are met and the plugin is working, you should see a "Todo" TAB in catalog entities where the associated codebase [example](https://github.com/benwilcock/springboot-djl-demo/blob/main/catalog-info.yml) has "TODO:" entries in its code.
 
 ## How it works
 
 1. The toolbox image is built using the `Dockerfile` which includes the `script.sh` file as the `ENTRYPOINT` of the image.
 
-   This image includes all the tools required to build plugins from source code.
+   This image includes all the tools required to convert and build dynamic-plugins from source code.
 
-2. The image is run and the `script.sh` is executed - causing the todo plugin to be built and pushed.
+2. The toolbox image is run and the `script.sh` is executed - causing the todo plugin to be built and pushed to Quay ready for testing.
 
    The script clones the Backstage `community-plugins` repository, initialises it with `yarn` and used the `janus-cli` to create dynamic plugins for the frontend and backend of the `todo` plugins in the `todo` workspace. The resulting OCI image is then built and pushed to your user account in Quay.
 
