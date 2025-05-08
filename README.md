@@ -7,8 +7,9 @@ As it stands, by following the instructions below you can build a dynamic plugin
 
 ## Features
 
-- **Plugin Build Automation**: Example script to compile and package the TODO plugin as a dynamic plugin.
-- **Image Registration**: Pushes the resulting TODO plugin OCI image to the Quay image registry
+- **No NodeJS or Yarn Required**: Contains everything required to build and package a dynamic plugin for RHDH.
+- **Dynamic Plugin Concersion**: Converts and packages the community 'TODO' plugin as an RHDH dynamic plugin.
+- **Automatic OCI Image Registration**: Pushes the resulting dynamic TODO plugin to the Quay image registry.
 
 ## Prerequisites
 
