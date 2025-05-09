@@ -1,4 +1,4 @@
-# RHDH Plugin Toolbox & Dynamic Plugin Builder
+# RHDH Dynamic Plugin Factory
 
 The **RHDH Plugin Toolbox** is a container based utility project intended to assist with building dynamic plugins for Red Hat Developer Hub (RHDH). This repository contains sample scripts and Dockerfiles that streamline the process of building and packaging dynamic plugins for use with RHDH. 
 
@@ -102,6 +102,7 @@ The toolbox image would then run through the list of plugins, convert them to th
 - **2025-05-09** Parameterised the build so that you can use any OCI registry (only tested with Quay).
 - **2025-05-09** Parameterised the build so that you can change the plugin folder to build within.
 - **2025-05-09** Parameterised the build so that you can use any clonable source code repo (only tested with the community-plugins for backstage)
+- **2025-05-09** Added `--no-cache` to the `podman build` command as using the cache makes it hard to switch cli tool versions in the image based on the ENV variables!?
 
 
 
