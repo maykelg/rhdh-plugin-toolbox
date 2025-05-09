@@ -8,6 +8,7 @@ source $ENV_FILE
 # Build the toolbox image using the Dockerfile from the current directory
 echo "Building the toolbox image: $TOOLBOX_IMAGE_NAME:$TOOLBOX_IMAGE_TAG"
 podman build --build-arg-file $ENV_FILE -t $TOOLBOX_IMAGE_NAME:$TOOLBOX_IMAGE_TAG .
+# You can use --no-cache if you want to ensure a fresh build every time
 
 # Run the toolbox image and remove it after exit
 echo "Running toolbox image: $TOOLBOX_IMAGE_NAME:$TOOLBOX_IMAGE_TAG"

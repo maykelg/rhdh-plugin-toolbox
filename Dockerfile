@@ -48,14 +48,17 @@ RUN corepack enable yarn
 
 RUN echo "Telling corepack to use Yarn $YARN_VERSION..."
 RUN corepack use yarn@$YARN_VERSION
-RUN echo "Checking Yarn version. Should now show $YARN_VERSION..."
-RUN yarn --version
+
 
 # Initialize a Yarn project
-RUN yarn init -y
+#RUN yarn init -y
 
 # Install Backstage CLI and TypeScript
-RUN yarn add @backstage/cli @janus-idp/cli typescript
+#RUN yarn add typescript
+
+# Install the Janus CLI locally
+RUN npm install -g @janus-idp/cli@latest --yes
+RUN npm install -g @backstage/cli@latest --yes
 
 # Add the file script.sh to the image
 ADD script.sh /app/script.sh

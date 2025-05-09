@@ -15,6 +15,10 @@ As it stands, by following the instructions below you can build a dynamic plugin
 - Podman installed on your system.
 - A Quay.io Account (Free)
 
+## Limitations
+
+- Only frontend and backend plugin pairs are supported (can you contribute a fix?)
+
 ## Getting Started
 
 1. Clone this repository:
@@ -63,7 +67,7 @@ As it stands, by following the instructions below you can build a dynamic plugin
         disabled: false
     ```
 
-    When you boot [RHDH Local](https://github.com/redhat-developer/rhdh-local) with this configuration in place (`podman compose up`), your dynamic plugin will be installed and you can then test that the [Todo plugin](https://github.com/backstage/community-plugins/tree/main/workspaces/todo/plugins/todo) is working correctly. The plugin works with catalog entities that have "// TODO:" lines in their code on GitHub. If the correct conditions are met, and the plugin is working, you should see a "Todo" TAB in catalog entities where the associated codebase contains the necessary todo line (try this [example](https://github.com/benwilcock/springboot-djl-demo/blob/main/catalog-info.yml)).
+    When you boot [RHDH Local](https://github.com/redhat-developer/rhdh-local) with this configuration in place (`podman compose up`), your dynamic plugin will be installed and you can then test that the [Todo plugin](https://github.com/backstage/community-plugins/tree/main/workspaces/todo/plugins/todo) is working correctly. The plugin works with catalog entities that have "`// TODO:`" lines in their code on GitHub. If the correct conditions are met, and the plugin is working, you should see a "Todo" TAB in catalog entities where the associated codebase contains the necessary todo line (try this [example](https://github.com/benwilcock/springboot-djl-demo/blob/main/catalog-info.yml)).
 
 ## How it works
 
