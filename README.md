@@ -4,7 +4,18 @@ The **RHDH Plugin Toolbox** is a container based utility project intended to ass
 
 As it stands, by following the instructions below you can build a dynamic plugin in a few munites and with very few upfront requirements or pre-requisites. You don't even need to be all that familiar with NodeJS, or Yarn, or RHDH. If nothing else, you can browse through this repo to familiarise yourself with the tools and commands required to package regular Backstage plugins as dynamic plugins for use with RHDH.
 
-## Features
+## What's The Goal?
+
+My goal with this project is to get to a point where a okatform engineer moving to RHDH can migrate a huge list of plugins with very little setup required. Specifically I' like them to be able to:
+
+1. Pull the toolbox image from the Quay repository (as they do today for RHDH)
+2. Create a list of the plugins that they wish to convert to dynamic plugins compatible with RHDH
+3. Set some settings for the toolbox image (such as their OCI registry details etc.)
+4. Run the toollox image passing in the list of plugins to convert
+
+The toolbox image would then run through the list of plugins, convert them to the dynamic plugin format, package them as OCI images, and push those OCI images to the preferred OCI registry.
+
+## Current Features
 
 - **No NodeJS or Yarn Required**: Contains everything required to build and package a dynamic plugin for RHDH.
 - **Dynamic Plugin Conversion**: Converts and packages the community 'TODO' plugin as an RHDH dynamic plugin.
@@ -17,7 +28,8 @@ As it stands, by following the instructions below you can build a dynamic plugin
 
 ## Limitations
 
-- Only frontend and backend plugin pairs are supported (can you contribute a fix?)
+- Only frontend and backend plugin pairs are supported (can you contribute a fix?).
+- There's no official toolbox image yet, you have to build it using the `build-and-run-toolbox-image.sh` script (but this could change as the project improves).
 
 ## Getting Started
 
