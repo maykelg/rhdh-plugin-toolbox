@@ -6,12 +6,12 @@ As it stands, by following the instructions below you can build a dynamic plugin
 
 ## What's The Goal?
 
-My goal with this project is to get to a point where a okatform engineer moving to RHDH can migrate a huge list of plugins with very little setup required. Specifically I' like them to be able to:
+My goal with this project is to get to a point where a platform engineer adopting RHDH can migrate a long list of plugins with very little setup required. Specifically I'd like them to be able to:
 
-1. Pull the toolbox image from the Quay repository (as they do today for RHDH)
-2. Create a list of the plugins that they wish to convert to dynamic plugins compatible with RHDH
-3. Set some settings for the toolbox image (such as their OCI registry details etc.)
-4. Run the toollox image passing in the list of plugins to convert
+1. Pull the toolbox image from their OCI image repository (as they do today for RHDH)
+2. Create a file based list of the plugins that they wish to convert to dynamic plugins compatible with RHDH
+3. Set some settings for the toolbox image to use (such as their OCI registry details etc.)
+4. Run the toollox image, passing in the file based list of plugins to convert
 
 The toolbox image would then run through the list of plugins, convert them to the dynamic plugin format, package them as OCI images, and push those OCI images to the preferred OCI registry.
 
@@ -19,17 +19,17 @@ The toolbox image would then run through the list of plugins, convert them to th
 
 - **No NodeJS or Yarn Required**: Contains everything required to build and package a dynamic plugin for RHDH.
 - **Dynamic Plugin Conversion**: Converts and packages the community 'TODO' plugin as an RHDH dynamic plugin.
-- **Automatic Plugin OCI Image Push**: Pushes the resulting dynamic TODO plugin to your Quay image registry.
+- **Automatic Plugin OCI Image Push**: Pushes the resulting dynamic TODO plugin to your preferred image registry.
 
 ## Prerequisites
 
 - Podman installed on your system.
-- A Quay.io Account (Free)
+- An OCI registry service to push images to (e.g Quay.io or Docker Hub)
 
 ## Limitations
 
 - Only frontend and backend plugin pairs are supported (can you contribute a fix?).
-- There's no official toolbox image yet, you have to build it using the `build-and-run-toolbox-image.sh` script (but this could change as the project improves).
+- There's no 'official' RHDH toolbox container image yet, you have to build the image locally using the `build-and-run-toolbox-image.sh` script (but this could change if the project gains traction).
 
 ## Getting Started
 
@@ -61,7 +61,7 @@ The toolbox image would then run through the list of plugins, convert them to th
     plugins:
 
       # Activate and configure the TODO Frontend Plugin
-      - package: oci://quay.io/<your-quay-repo>/backstage-community-plugin-todo:latest!backstage-community-plugin-todo
+      - package: oci://<your-oci-registry>/<your-image-repo>/backstage-community-plugin-todo:latest!backstage-community-plugin-todo
         disabled: false
         pluginConfig:
           dynamicPlugins:
@@ -75,7 +75,7 @@ The toolbox image would then run through the list of plugins, convert them to th
                       title: Todo
                       mountPoint: entity.page.todo
       # Activate and configure the TODO Backend Plugin
-      - package: oci://quay.io/<your-quay-repo>/backstage-community-plugin-todo:latest!backstage-community-plugin-todo-backend
+      - package: oci://<your-oci-registry>/<your-image-repo>/backstage-community-plugin-todo:latest!backstage-community-plugin-todo-backend
         disabled: false
     ```
 
@@ -87,10 +87,21 @@ The toolbox image would then run through the list of plugins, convert them to th
 
    This image includes all the tools required to convert and build dynamic-plugins from source code. You will will be prompted to take positive action during the process.
 
-2. The toolbox image is run and the `script.sh` is executed - causing the todo plugin to be built and pushed to Quay ready for testing.
+2. The toolbox image is run and the `script.sh` is executed - causing the todo plugin to be built and pushed to your OCI image registry ready for testing.
 
-   The script clones the Backstage `community-plugins` repository, initialises it with `yarn` and uses the `janus-cli` to create dynamic plugins for the frontend and backend of the `todo` plugin in the [todo workspace](https://github.com/backstage/community-plugins/tree/main/workspaces/todo). The resulting OCI image containing the dynamic plugin is then built and pushed to your user account in Quay.
+   The script clones the Backstage `community-plugins` repository, initialises it with `yarn` and uses the `janus-cli` to create dynamic plugins for the frontend and backend of the `todo` plugin in the [todo workspace](https://github.com/backstage/community-plugins/tree/main/workspaces/todo). The resulting OCI image containing the dynamic plugin is then built and pushed to your user account in your OCI image registry.
 
 3. The plugins are enabled in the RHDH configuration and run at boot.
 
-   Based on the configuration added in step 3 above, RHDH downloads the OCI image of the todo plugin from your Quay repository and integrated their features with Red Hat Developer Hub for the benefit of your users.
+   Based on the configuration added in step 3 above, RHDH downloads the OCI image of the todo plugin from your OCI image registry and integrated its features with Red Hat Developer Hub for the benefit of your end users.
+
+## Latest News
+
+- **2025-05-09** Added project goals to the readme so you can see where I'm going with this.
+- **2025-05-09** Improved the script so that there are no prompts any more - meaning fully automated builds.
+- **2025-05-09** Parameterised the build so that you can use any OCI registry (only tested with Quay).
+- **2025-05-09** Parameterised the build so that you can change the plugin folder to build within.
+- **2025-05-09** Parameterised the build so that you can use any clonable source code repo (only tested with the community-plugins for backstage)
+
+
+

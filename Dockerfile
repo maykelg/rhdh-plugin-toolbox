@@ -4,8 +4,12 @@ FROM ubuntu:22.04
 # ENV Arguments expected:
 ARG YARN_VERSION
 ARG NODE_VERSION
-RUN echo "YARN_VERSION is set to: $YARN_VERSION"
-RUN echo "NODE_VERSION is set to: $NODE_VERSION"
+ARG JANUS_CLI_VERSION
+ARG BACKSTAGE_CLI_VERSION
+RUN echo "YARN_VERSION is set to: ${YARN_VERSION}"
+RUN echo "NODE_VERSION is set to: ${NODE_VERSION}"
+RUN echo "JANUS_CLI_VERSION is set to: ${JANUS_CLI_VERSION}"
+RUN echo "BACKSTAGE_CLI_VERSION is set to: ${BACKSTAGE_CLI_VERSION}"
 
 # Set the working directory
 WORKDIR /app
@@ -31,41 +35,37 @@ RUN apt-get update && \
 
 # Set the NVM directory and create it
 ENV NVM_DIR=/root/.nvm
-RUN mkdir -p $NVM_DIR
+RUN mkdir -p ${NVM_DIR}
 
 # Install Node.js using nvm
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
     && . $NVM_DIR/nvm.sh \
-    && nvm install $NODE_VERSION \
-    && nvm use $NODE_VERSION \
-    && nvm alias default $NODE_VERSION
+    && nvm install ${NODE_VERSION} \
+    && nvm use ${NODE_VERSION} \
+    && nvm alias default ${NODE_VERSION}
 
 # Make nvm available in subsequent shell sessions
-ENV PATH="$NVM_DIR/versions/node/v22.15.0/bin:$PATH"
+ENV PATH="${NVM_DIR}/versions/node/v22.15.0/bin:${PATH}"
 
-RUN echo "Enabling Corepack for Yarn version $YARN_VERSION..."
+# Installing and activating YARN using corepack
+RUN echo "Enabling Corepack for Yarn version ${YARN_VERSION}..."
 RUN corepack enable yarn
 
-RUN echo "Telling corepack to use Yarn $YARN_VERSION..."
-RUN corepack use yarn@$YARN_VERSION
+RUN echo "Preparing Corepack (activating) yarn version ${YARN_VERSION}..."
+RUN corepack prepare yarn@${YARN_VERSION} --activate
 
-
-# Initialize a Yarn project
-#RUN yarn init -y
-
-# Install Backstage CLI and TypeScript
-#RUN yarn add typescript
+RUN echo "Telling corepack to use yarn version ${YARN_VERSION}..."
+RUN corepack use yarn@${YARN_VERSION}
 
 # Install the Janus CLI locally
-RUN npm install -g @janus-idp/cli@latest --yes
-RUN npm install -g @backstage/cli@latest --yes
+RUN npm install -g @janus-idp/cli@${JANUS_CLI_VERSION} --yes
+RUN npm install -g @backstage/cli@${BACKSTAGE_CLI_VERSION} --yes
 
 # Add the file script.sh to the image
 ADD script.sh /app/script.sh
 RUN chmod +x /app/script.sh
 
 # Set the entrypoint to /bin/bash if you want to work interactively
-#ENTRYPOINT ["/bin/bash"]
 ENTRYPOINT ["/app/script.sh"]
 
 # Optionally, set the default command.

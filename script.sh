@@ -18,6 +18,7 @@ echo "Working from $START_LOC"
 
 # Performing initial Yarn task
 echo "Performing yarn install..."
+export CI=true # CI is set to true, which can affect how some packages behave (reduces prompting). 
 yarn install
 
 # Performing typescript checking task
@@ -37,21 +38,21 @@ echo "Exporting frontend plugin..."
 janus-cli package export-dynamic-plugin
 
 
-# login to quay.io
-echo "Getting ready to package and push the dynamic plugins to Quay.io"
-echo "Logging into quay.io as $QUAY_USERNAME..."
-podman login -u=$QUAY_USERNAME -p=$QUAY_PASSWORD quay.io
+# login to the OCI registry
+echo "Getting ready to package and push the dynamic plugins to $OCI_REPO"
+echo "Logging into $OCI_REPO as $OCI_REPO_USERNAME..."
+podman login -u=$OCI_REPO_USERNAME -p=$OCI_REPO_PASSWORD $OCI_REPO
 
 # Return to the workspace root folder
 cd $START_LOC #we should be in workspaces/todo
 echo "Exporting dynamic plugins from: $(pwd)" 
 
 # Build the dynamic plugin OCI image locally with podman
-echo "Building the image: $QUAY_USERNAME/$QUAY_IMAGE_NAME:$QUAY_IMAGE_TAG"
-janus-cli package package-dynamic-plugins --tag quay.io/$QUAY_USERNAME/$QUAY_IMAGE_NAME:$QUAY_IMAGE_TAG
+echo "Building the image: $OCI_REPO_USERNAME/$OCI_REPO_IMAGE_NAME:$OCI_REPO_IMAGE_TAG"
+janus-cli package package-dynamic-plugins --tag $OCI_REPO/$OCI_REPO_USERNAME/$OCI_REPO_IMAGE_NAME:$OCI_REPO_IMAGE_TAG
 
 # Push the dynamic plugin OCI image to quay.io
-echo "Pushing the image to Quay.io as: $QUAY_USERNAME/$QUAY_IMAGE_NAME:$QUAY_IMAGE_TAG"
-podman push quay.io/$QUAY_USERNAME/$QUAY_IMAGE_NAME:$QUAY_IMAGE_TAG
+echo "Pushing the image to Quay.io as: $OCI_REPO_USERNAME/$OCI_REPO_IMAGE_NAME:$OCI_REPO_IMAGE_TAG"
+podman push $OCI_REPO/$OCI_REPO_USERNAME/$OCI_REPO_IMAGE_NAME:$OCI_REPO_IMAGE_TAG
 echo "Your dynamic plugin image has now been uploaded to Quay.io."
 echo "Exiting..."
