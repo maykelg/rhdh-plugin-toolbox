@@ -103,6 +103,7 @@ The toolbox image would then run through the list of plugins, convert them to th
 - **2025-05-09** Parameterised the build so that you can change the plugin folder to build within.
 - **2025-05-09** Parameterised the build so that you can use any clonable source code repo (only tested with the community-plugins for backstage)
 - **2025-05-09** Added `--no-cache` to the `podman build` command as using the cache makes it hard to switch cli tool versions in the image based on the ENV variables!?
+- **2025-05-12** Added the ability to checkout a specific branch of the closen plugin repo. Check the `sample.env` for an example.
 
 
 

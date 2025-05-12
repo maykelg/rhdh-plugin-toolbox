@@ -9,20 +9,26 @@ echo "npm version: $(npm --version)"
 echo "janus-cli version: $(janus-cli --version)"
 echo "backstage-cli version: $(backstage-cli --version)"
 
-echo "Cloning the Git repository..."
+# Clone the code
+echo "Cloning the Git repository $GIT_REPO..."
 git clone $GIT_REPO
 
+# Enter the working directory
 cd $ROOT_FOLDER
 START_LOC=$(pwd)
 echo "Working from $START_LOC"
 
+# Switch to the preferred code branch
+echo "Switching to the $GIT_BRANCH branch..."
+git checkout $GIT_BRANCH
+
 # Performing initial Yarn task
-echo "Performing yarn install..."
+echo "Perform a yarn install..."
 export CI=true # CI is set to true, which can affect how some packages behave (reduces prompting). 
 yarn install
 
 # Performing typescript checking task
-echo "Performing typescript compiler check (tsc)..."
+echo "Perform a typescript compiler check (tsc)..."
 yarn tsc
 
 # Export the backend plugin as a dynamic plugin.
