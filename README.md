@@ -104,6 +104,9 @@ The toolbox image would then run through the list of plugins, convert them to th
 - **2025-05-09** Parameterised the build so that you can use any clonable source code repo (only tested with the community-plugins for backstage)
 - **2025-05-09** Added `--no-cache` to the `podman build` command as using the cache makes it hard to switch cli tool versions in the image based on the ENV variables!?
 - **2025-05-12** Added the ability to checkout a specific branch of the closen plugin repo. Check the `sample.env` for an example.
+- **2025-05-12** Added a prompt to see if the user has changed and tool versions. If yes, a fresh image is always built.
+- **2025-05-14** Cleaned up the `sample.env` file to clarify which items are for the image build steps and which are for the image run steps.
+
 
 
 
