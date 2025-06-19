@@ -18,6 +18,9 @@ else
 fi
 # You can use --no-cache if you want to ensure a fresh build every time
 
+# Back out if the build failed
+[[ $? -ne 0 ]] && exit 1
+
 # Run the toolbox image and remove it after exit
 echo "Running the script contained in the toolbox image: $TOOLBOX_IMAGE_NAME:$TOOLBOX_IMAGE_TAG"
 podman run -it --rm --env-file "$ENV_FILE" $TOOLBOX_IMAGE_NAME:$TOOLBOX_IMAGE_TAG
