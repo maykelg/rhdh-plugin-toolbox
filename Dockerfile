@@ -45,7 +45,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
     && nvm alias default ${NODE_VERSION}
 
 # Make nvm available in subsequent shell sessions
-ENV PATH="${NVM_DIR}/versions/node/v22.15.0/bin:${PATH}"
+ENV PATH="${NVM_DIR}/versions/node/v${NODE_VERSION}/bin:${PATH}"
 
 # Installing and activating YARN using corepack
 RUN echo "Enabling Corepack for Yarn version ${YARN_VERSION}..."
